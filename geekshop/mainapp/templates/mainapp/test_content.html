@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title|title }}</title>
+</head>
+<body>
+<h1>{{ header }}</h1>
+<p>{{ user }}</p>
+
+{% for product in products %}
+    {% if product.price > 5000 %}
+    {{ product.name }} {{ product.price|default:1 }} <br>
+    {% else %}
+        <p style="color:red;"> {{ product.name }} {{ product.price }}</p>
+    {% endif %}
+{% endfor %}
+
+<h1>Promo</h1>
+{% if products_promo %}
+    {% for product in products_promo %}
+        <p style="color:green;"> {{ product.name }} {{ product.price }}</p>
+    {% endfor %}
+{% endif %}
+
+</body>
+</html>
