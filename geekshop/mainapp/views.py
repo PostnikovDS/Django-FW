@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 import json
 import os
-
+from mainapp.models import Product, ProductCategory
 MODULE_DIR = os.path.dirname(__file__)
 # print(MODULE_DIR)
 # Create your views here.
@@ -14,11 +14,11 @@ def index(request):
 
 
 def products(request):
-    file_path = os.path.join(MODULE_DIR, 'fixtures/goods.json')
+    # file_path = os.path.join(MODULE_DIR, 'fixtures/goods.json')
     context = {
-        'title': 'Geekshop - Каталог',
+        'title': 'Geekshop | Каталог',
     }
-    context['products'] = json.load(open(file_path, encoding='utf-8'))
+    # context['products'] = json.load(open(file_path, encoding='utf-8'))
     # context = {
     #     'title': 'GeekShop - Каталог',
     #     'products': [
@@ -65,25 +65,27 @@ def products(request):
     #         }
     #     ],
     # }
+    context['products'] = Product.objects.all()
+    context['categories'] = ProductCategory.objects.all()
     return render(request, 'mainapp/products.html', context)
 
 
-def test(request):
-    context = {
-        'title': 'geekshop',
-        'header': 'Добро пожаловать на сайт',
-        'user': 'Денис',
-        'products': [
-            {'name': 'Худи черного цвета с монограммами adidas Originals', 'price': 6090},
-            {'name': 'Синяя куртка The North Face', 'price': 23725},
-            {'name': 'Коричневый спортивный oversized-топ ASOS DESIGN', 'price': 3390},
-            {'name': 'Черный рюкзак Nike Heritage', 'price': 2340},
-            {'name': 'Черные туфли на платформе с 3 парами люверсов Dr Martens 1461 Bex', 'price': 13590},
-            {'name': 'Темно-синие широкие строгие брюки ASOS DESIGN', 'price': 2890},
-        ],
-        'products_promo': [
-            {'name': 'Худи черного цвета с монограммами adidas Originals', 'price': 5000},
-            {'name': 'Синяя куртка The North Face', 'price': 1000},
-        ]
-    }
-    return render(request, 'mainapp/test_content.html', context)
+# def test(request):
+#     context = {
+#         'title': 'geekshop',
+#         'header': 'Добро пожаловать на сайт',
+#         'user': 'Денис',
+#         'products': [
+#             {'name': 'Худи черного цвета с монограммами adidas Originals', 'price': 6090},
+#             {'name': 'Синяя куртка The North Face', 'price': 23725},
+#             {'name': 'Коричневый спортивный oversized-топ ASOS DESIGN', 'price': 3390},
+#             {'name': 'Черный рюкзак Nike Heritage', 'price': 2340},
+#             {'name': 'Черные туфли на платформе с 3 парами люверсов Dr Martens 1461 Bex', 'price': 13590},
+#             {'name': 'Темно-синие широкие строгие брюки ASOS DESIGN', 'price': 2890},
+#         ],
+#         'products_promo': [
+#             {'name': 'Худи черного цвета с монограммами adidas Originals', 'price': 5000},
+#             {'name': 'Синяя куртка The North Face', 'price': 1000},
+#         ]
+#     }
+#     return render(request, 'mainapp/test_content.html', context)
