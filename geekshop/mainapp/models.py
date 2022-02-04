@@ -2,6 +2,9 @@ from django.db import models
 
 
 # Create your models here.
+from baskets.models import Basket
+
+
 class ProductCategory(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True, null=True)
@@ -22,3 +25,15 @@ class Product(models.Model):
 
     def __str__(self):
         return f'{self.name} | {self.category}'
+
+    def sum(self):
+        return self.quantity * self.product.price
+
+    def total_sum(self):
+        baskets = Basket.objects.filter(user=self.user)
+        return sum(basket.sum() for basket in baskets)
+
+    def total_quantity(self):
+        baskets = Basket.objects.filter(user=self.user)
+        return sum(basket.quantity for basket in baskets)
+
